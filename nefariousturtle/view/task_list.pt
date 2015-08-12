@@ -1,0 +1,14 @@
+<table>
+    <thead>
+        <tr>
+            <td> title </td>
+            <td>id</td>
+        </tr>
+    </thead>
+    <tbody>
+      <tr tal:repeat="task tasks">
+        <td>${task.title}</td>
+        <td>${task.id}</td>
+      </tr>
+    </tbody>
+</table>

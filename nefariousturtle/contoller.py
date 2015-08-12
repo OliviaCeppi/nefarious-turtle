@@ -5,17 +5,35 @@ from sqlalchemy.exc import DBAPIError
 
 from .models import (
     DBSession,
-    MyModel,
+    Task,
+    Subject,
     )
 
 
 @view_config(route_name='home', renderer='view/mytemplate.pt')
 def my_view(request):
     try:
-        one = DBSession.query(MyModel).filter(MyModel.name == 'one').first()
+        one = DBSession.query(Task).filter(Task.title == 'one').first()
     except DBAPIError:
         return Response(conn_err_msg, content_type='text/plain', status_int=500)
     return {'one': one, 'project': 'nefarious-turtle'}
+
+
+@view_config(route_name='new_task', renderer='view/task_add.pt')
+def new_task(request):
+    if 'form.submitted' in request.params:
+        title = request.params['title']
+        task = Task(title=title)
+        DBSession.add(task)
+
+    return {}
+
+
+@view_config(route_name='task_list', renderer='view/task_list.pt')
+def all_task(request):
+    tasks = DBSession.query(Task).all()
+    return {'tasks': tasks}
+#tel = {'jack': 4098, 'sape': 4139}
 
 
 conn_err_msg = """\

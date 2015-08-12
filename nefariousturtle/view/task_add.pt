@@ -1,0 +1,7 @@
+<form action="">
+Title:<br>
+<input type="text" name="title" value="">
+<br>
+<br><br>
+<input type="submit" name="form.submitted" value="Submit">
+</form>

@@ -3,6 +3,8 @@ from sqlalchemy import (
     Index,
     Integer,
     Text,
+    DateTime,
+    Boolean
     )
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -18,10 +20,21 @@ DBSession = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
 Base = declarative_base()
 
 
-class MyModel(Base):
-    __tablename__ = 'models'
+class Task(Base):
+    __tablename__ = 'tasks'
+    id = Column(Integer, primary_key=True)
+    title = Column(Text)
+    subject = Column(Text)
+    due = Column(DateTime)
+    created = Column(DateTime)
+    done = Column(Boolean)
+
+
+class Subject(Base):
+    __tablename__ = 'subject'
     id = Column(Integer, primary_key=True)
     name = Column(Text)
-    value = Column(Integer)
+    color = Column(Text)
 
-Index('my_index', MyModel.name, unique=True, mysql_length=255)
+
+Index('my_index', Task.title, unique=True, mysql_length=255)
